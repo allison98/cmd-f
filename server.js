@@ -1,22 +1,17 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const multer = require('multer');
+const pug = require('pug');
 
-//app.set('view engine', 'pug');
 const app = express();
 app.use(express.static(__dirname + '/public'));
 app.use(bodyParser.urlencoded({
   extended: true
 }));
 app.use(bodyParser.json());
-const database = {
-    keys: [
-      {
-        key: 'narrative'
-      }
-    ]
-}
 
+// app.set("view engine", "pug");
+// app.set("views", path.join(__dirname, "views"));
 
 // SET STORAGE
 var storage = multer.diskStorage({
@@ -45,16 +40,13 @@ app.post('/uploadfile', upload.single('myFile'), (req, res, next) => {
 })
 
 app.post('/transcribe', (req, res) => {
-  const times = transcribe(req.body["key-val"]);
-  console.log("lalala: " + times);
-  //res.render('times', times);
-  res.json(req.body);
+  transcribe(req.body["key-val"]);
+  
+  //res.json(req.body);
   //res.render('index.html',{timestamps: times});
-  //res.send('Transcribed! <br> <a href="./index.html">Go Back</a>');
-  // res.end(function(response) {
-    
-  //   //console.log("result: " + response.body);
-  // });
+  res.send('Transcribed! <br> <a href="./index.html">Go Back</a>');
+
+
 })
 
 async function transcribe(keyToFind) {
@@ -87,7 +79,7 @@ async function transcribe(keyToFind) {
     const [operation] = await client.longRunningRecognize(request);
     // Get a Promise representation of the final result of the job
     const [response] = await operation.promise();
-    return await response.results.forEach(result => {
+    await response.results.forEach(result => {
       console.log(`Transcription: ${result.alternatives[0].transcript}`);
       result.alternatives[0].words.forEach(wordInfo => {
         if (key == wordInfo.word) {
@@ -99,10 +91,10 @@ async function transcribe(keyToFind) {
         }
       });
     });
-    //return times;
-    // times.forEach(element => {
-    //   console.log(element);
-    // });
+
+    times.forEach(element => {
+      console.log(element);
+    });
   }
   transcribe().catch(console.error);
 

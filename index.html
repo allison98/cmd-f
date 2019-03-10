@@ -131,7 +131,8 @@
  <audio id="sound" style="margin:30px" src="https://ia801309.us.archive.org/5/items/eubanks_elizabeth_01/eubanks_elizabeth_01.mp3" controls="controls">  
 </audio>
 <div class='skipping'>
-	<button class="btn btn-outline-dark" type="submit" onclick="audioUpload()">Submit</button>
+    <button class="btn btn-outline-dark" type="submit" onclick="audioUpload()">Display Audio</button>
+    <button type="submit" value="Display Times" class="btn btn-outline-dark" onclick="addButtons(times)">
     <button  class="btn btn-outline-dark" type="reset" onclick="clearButtons()">Reset</button>
 </div>  
 </div>
@@ -141,7 +142,7 @@
     <div class='urlsubmit'>
         <form action="/transcribe" method="GET">
             <input type="text" id="myText" placeholder="Some text...">  
-            <input type="submit" value="cmd-f" class="btn btn-outline-dark" onclick="addButtons(times)">
+            <input type="submit" value="cmd-f" class="btn btn-outline-dark">
         </form> 
     </div>
     <div >
@@ -157,19 +158,13 @@
 <div class="footer"><p>Created by Thai, Maggie, Brooke and Allison</p>
     <p>cmd-f Hackathon Vancouver, March 9-10, 2019</p></div>
 <script>
-    function myFunction() {
-        var x = document.getElementById('myText').value;
-        localStorage.setItem('key', x);
-        document.getElementById(id).innerHTML = "yay";
-    }
-
     function playTimestamp(time) {
      	 var myAudio=document.getElementById("sound");
      	 myAudio.currentTime = time;
      	 myAudio.play();
         }
 		
-        var times = [20, 40, 70, 90];
+        var times = [1.2, 20, 32.2, 51.9];
         
         function addButton(times) {
         document.getElementById("buttons").innerHTML = "";
