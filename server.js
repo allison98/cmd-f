@@ -2,9 +2,12 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const multer = require('multer');
 
-
+//app.set('view engine', 'pug');
 const app = express();
 app.use(express.static(__dirname + '/public'));
+app.use(bodyParser.urlencoded({
+  extended: true
+}));
 app.use(bodyParser.json());
 const database = {
     keys: [
@@ -25,6 +28,7 @@ var storage = multer.diskStorage({
   }
 })
  
+var times = [];
 var upload = multer({ storage: storage })
 
 
@@ -40,21 +44,20 @@ app.post('/uploadfile', upload.single('myFile'), (req, res, next) => {
   
 })
 
-app.get('/transcribe', (req, res) => {
-  transcribe();
-
-  res.send('<a href="./index.html">Go Back</a>');
+app.post('/transcribe', (req, res) => {
+  const times = transcribe(req.body["key-val"]);
+  console.log("lalala: " + times);
+  //res.render('times', times);
+  res.json(req.body);
+  //res.render('index.html',{timestamps: times});
+  //res.send('Transcribed! <br> <a href="./index.html">Go Back</a>');
+  // res.end(function(response) {
+    
+  //   //console.log("result: " + response.body);
+  // });
 })
 
-// app.post('/upload', (req, res) => {
-//     const { key } = req.body;
-//     database.keys.push({
-//         key: key
-//     })
-//     res.json(database.keys);
-// })
-
-async function transcribe() {
+async function transcribe(keyToFind) {
     // Imports the Google Cloud client library
     const speech = require('@google-cloud/speech');
     const fs = require('fs');
@@ -62,9 +65,9 @@ async function transcribe() {
     // Creates a client
     const client = new speech.SpeechClient();
   
-    const key = database.keys[0].key;
-    var times = [];
-  
+    const key = keyToFind;
+    // Clear the previous time array
+    times = [];
     // The audio file's encoding, sample rate in hertz, and BCP-47 language code
     const audio = {
       uri: "gs://cmdfaudio/narrative.flac",
@@ -84,7 +87,7 @@ async function transcribe() {
     const [operation] = await client.longRunningRecognize(request);
     // Get a Promise representation of the final result of the job
     const [response] = await operation.promise();
-    response.results.forEach(result => {
+    return await response.results.forEach(result => {
       console.log(`Transcription: ${result.alternatives[0].transcript}`);
       result.alternatives[0].words.forEach(wordInfo => {
         if (key == wordInfo.word) {
@@ -92,14 +95,14 @@ async function transcribe() {
           `${wordInfo.startTime.seconds}` +
           `.` +
           wordInfo.startTime.nanos / 100000000;
-          times.push(startSecs);
+          times.push(parseFloat(startSecs));
         }
       });
     });
-    times.forEach(element => {
-      element = parseFloat(element);
-      console.log(element);
-    });
+    //return times;
+    // times.forEach(element => {
+    //   console.log(element);
+    // });
   }
   transcribe().catch(console.error);
 

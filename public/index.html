@@ -122,8 +122,8 @@
 
     <!--disply the audio bar, submit transcribes-->
     <div class='urlsubmit'>
-        <form action="/transcribe" method="GET">
-            <input type="text" id="myText" value="Some text...">  
+        <form action="/transcribe" method="POST">
+            <input type="text" id="myText" placeholder="Some text..." name="key-val">  
             <input type="submit" value="Find Words" class="btn btn-outline-dark" onclick="addButtons(times)">
         </form> 
     </div>
@@ -147,7 +147,7 @@
      	 //myAudio.play();
         }
 		
-        var times = [20, 40, 70, 90];
+        var times = [20 30 10];
         
         function addButton(times) {
         document.getElementById("buttons").innerHTML = "";
