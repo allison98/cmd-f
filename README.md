@@ -15,3 +15,9 @@
     cmd-f my voice. uses Google Cloud Storage API to store the user-uploaded file and the 
     Google Speech-to-Text API to transcribe audio files into text and extract the timestamps of 
     all occurrences of the keyword.  </p>
+    
+  <h3>Acknowledgements</h3>
+  <p>
+    We acknowledge the many resources provided by the online community, including W3Schools and StackOverflow. We would also like to thank the mentors, volunteers, organizers, and sponsors of cmd-f 2019.
+ 
+  </p>
