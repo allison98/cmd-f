@@ -87,7 +87,7 @@ async function transcribe(keyToFind) {
           `${wordInfo.startTime.seconds}` +
           `.` +
           wordInfo.startTime.nanos / 100000000;
-          times.push(parseFloat(startSecs));
+          times.push(startTime);
         }
       });
     });
