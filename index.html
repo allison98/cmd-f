@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>cmd-f Voice</title>
+        <script src="../texttospeech_api.js"></script>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <style>
+        * {
+            overflow:hidden;
+        }
+        .header {
+            position:relative;
+            background-color:lavender;
+            text-align:center;
+            font-family: Verdana, Geneva, Tahoma, sans-serif;
+            margin-bottom:20px;
+            padding:10px;
+            color:darkgray;
+        }
+
+      /*  button {
+        background-color: rgb(147, 133, 226); 
+        border: none;
+        color: white;
+        padding: 5px 50px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 13px;*/
+      
+
+        
+        .urlsubmit {
+            margin:auto;
+            display:inline-block;
+            position: relative;
+            padding-bottom:20px;
+            text-align:center;
+        }
+
+        .title {
+            font-family: 'Courier New', Courier, monospace;
+            color:black;
+            font-size: 30px;
+            font-weight: 800;
+        }
+
+        .subtitle {
+            font-family: 'Courier New', Courier, monospace;
+            color:black;
+        }
+
+        .col {
+            float:left;
+            width:50%;
+            padding:50px;
+        }
+
+        .row:after {
+            content: "";
+            display: table;
+            clear: both;
+        }
+
+
+        @media screen and (max-width: 600px) {
+        .column {
+            width: 100%;
+        }
+
+        .buttonStyling {
+        display:block !important;
+        margin:10px;
+    
+    }
+        }
+    .footer {
+        position:absolute;
+        bottom:0;
+        background-color:lavender;
+        text-align:center;
+        font-family: 'Courier New', Courier, monospace;
+        padding:10px;
+        height:150px;
+        width:100%;
+        color:darkgray;
+    }
+    .skiping {
+        margin:0px 70px;
+        display:block;
+    }
+    </style>
+
+</head>
+
+<title>CMD-F</title>
+
+<body>
+    <!--HEADER-->
+
+    <div class="header">
+        <!--<img height="70" src="maingraphic.png">-->
+        <p class = "title">cmd-f my voice.</p>
+        <p class = "subtitle">locate key phrases in audio and video files and quickly jump to the parts you want.</p>
+    </div>
+    <div class="row">
+    <div class="col">
+
+
+  <!--  <span id="key-val">
+        key
+    </span>-->
+     
+   <!-- <div class="video">
+    <iframe id="ytVideo" width="560" height="315"
+     src="https://www.youtube.com/embed/eDkpVwrhYfo" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+    </div>-->
+
+<!--UPLOAD an audio file, upload file button will add to bucket-->
+<form action="/uploadfile" enctype="multipart/form-data" method="POST"> 
+    <input id="upload" type="file" name="myFile" class="btn btn-outline-dark"/>
+    <input class="btn btn-outline-dark" type="submit" value="Upload a file"/>
+ </form>
+
+<!--disply the audio bar, submit adds the time buttons-->
+ <audio id="sound" style="margin:30px" src="https://ia801309.us.archive.org/5/items/eubanks_elizabeth_01/eubanks_elizabeth_01.mp3" controls="controls">  
+</audio>
+<div class='skipping'>
+	<button class="btn btn-outline-dark" type="submit" onclick="audioUpload()">Submit</button>
+    <button  class="btn btn-outline-dark" type="reset" onclick="clearButtons()">Reset</button>
+</div>  
+</div>
+<div class="col">
+
+    <!--disply the audio bar, submit transcribes-->
+    <div class='urlsubmit'>
+        <form action="/transcribe" method="GET">
+            <input type="text" id="myText" placeholder="Some text...">  
+            <input type="submit" value="cmd-f" class="btn btn-outline-dark" onclick="addButtons(times)">
+        </form> 
+    </div>
+    <div >
+        <p id = 'keyval'></p>
+    </div>
+<!--this is where the buttons appear-->
+    <div id='buttons'>
+   
+    </div>
+</div>
+
+</div>
+<div class="footer"><p>Created by Thai, Maggie, Brooke and Allison</p>
+    <p>cmd-f Hackathon Vancouver, March 9-10, 2019</p></div>
+<script>
+    function myFunction() {
+        var x = document.getElementById('myText').value;
+        localStorage.setItem('key', x);
+        document.getElementById(id).innerHTML = "yay";
+    }
+
+    function playTimestamp(time) {
+     	 var myAudio=document.getElementById("sound");
+     	 myAudio.currentTime = time;
+     	 myAudio.play();
+        }
+		
+        var times = [20, 40, 70, 90];
+        
+        function addButton(times) {
+        document.getElementById("buttons").innerHTML = "";
+        
+        	times.forEach( function (t) {
+        		var button= document.createElement('button');
+           	 	button.type = "button";
+            
+           	button.appendChild(document.createTextNode(secondsminutes(t)));
+            		button.setAttribute("onclick", "playTimestamp("+t+")");
+                    document.getElementById("buttons").appendChild(button);
+            
+                button.classList.add("buttonStyling");
+                button.classList.add("btn");
+                button.classList.add("btn-outline-dark");
+            });
+            // audioUpload();
+        document.getElementById("keyval").innerHTML=document.getElementById("myText").value + ' is located in the following times';
+            }
+            
+    	function secondsminutes(t) {
+  var seconds = t % 60;
+  var minutes = Math.floor(t/60);
+
+  var hours = Math.floor(minutes/60);
+  minutes = minutes % 60;
+
+  var strSec = seconds;
+  var strMin = minutes;
+  var strHours = hours;
+
+    if (hours.toString().length === 1) {
+      strHours = "0" + hours.toString();
+  }
+   if (minutes.toString().length === 1) {
+      strMin = "0" + minutes.toString();
+  }
+  if (seconds.toString().length === 1) {
+      strSec = "0" + seconds.toString();
+  }
+
+  var display = strHours + ":" + strMin + ":" + strSec;
+  return display;
+}
+
+	function clearButtons() {
+    	document.getElementById("buttons").innerHTML = "";
+        document.getElementById("sound").setAttribute("currentTime", 0);
+    }
+
+    function audioUpload() {
+        var audio = document.getElementById("upload").files[0];
+
+        var reader = new FileReader();
+
+        reader.onload = function(e) {
+             document.getElementById("sound").src = e.target.result;
+             document.getElementById("sound").controls = "controls";
+            }
+
+        reader.readAsDataURL(audio);
+
+        }
+    
+
+</script>
+
+</body>
+</html>
