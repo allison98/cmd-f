@@ -35,7 +35,7 @@ button {
 </style>
 <body>
     <div class="header"><img height="70" src="maingraphic.png">
-        <p</p></div>
+        <p></p></div>
 
     <div class='urlsubmit'>
     <input type="text" id="myText" value="Some text...">  
@@ -63,6 +63,19 @@ function myFunction() {
     <input type="file" name="fileupload" value="fileupload" id="fileupload">
     <input type="submit" value="submit">
 </form>
+
+    <audio id="sound" src="sound.mp3" controls="controls"></audio>
+    <button id="button" onclick="playTimestamp(20)">BUTTON</button>
+
+    <script>
+    function playTimestamp(time) {
+        myAudio=document.getElementById('sound');
+        myAudio.currentTime = time;
+        myAudio.play();
+        }
+      </script>
+
+
 
 </body>
 </html>
