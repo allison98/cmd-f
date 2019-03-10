@@ -73,6 +73,11 @@
         .column {
             width: 100%;
         }
+
+        .buttonStyling {
+        display:block;
+     
+    }
 }
         </style>
         <script src="/node_modules/angular/angular.js"></script>
@@ -81,6 +86,8 @@
 <title>CMD-F</title>
 
 <body>
+    <!--HEADER-->
+
     <div class="header">
         <!--<img height="70" src="maingraphic.png">-->
         <p class = "title">cmd-f my voice.</p>
@@ -90,53 +97,117 @@
     <div class="col">
 
 
-    <span id="key-val">
+  <!--  <span id="key-val">
         key
-    </span>
+    </span>-->
      
    <!-- <div class="video">
     <iframe id="ytVideo" width="560" height="315"
      src="https://www.youtube.com/embed/eDkpVwrhYfo" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
     </div>-->
 
+<!--UPLOAD an audio file, upload file button will add to bucket-->
 <form action="/uploadfile" enctype="multipart/form-data" method="POST"> 
     <input type="file" name="myFile" class="btn btn-outline-dark"/>
-    <input type="button" class="btn btn-outline-dark" type="submit" value="Upload a file"/>
+    <input type="button" class="btn btn-outline-dark" type="submit" value="Upload a file" onclick="audioUpload()"/>
  </form>
 
-    <audio id="sound" src="sound.mp3" controls="controls"></audio>
-    <!--<button type="button" class="btn btn-outline-dark" id="button" onclick="playTimestamp(20)">BUTTON</button>-->
+<!--disply the audio bar, submit adds the time buttons-->
+ <audio id="sound" style="margin:30px" src="https://ia801309.us.archive.org/5/items/eubanks_elizabeth_01/eubanks_elizabeth_01.mp3" controls="controls">  </audio>
+	<button class="btn btn-outline-dark" id="upload" type="submit" onclick="addButton(times)">Submit</button>
+    <button  class="btn btn-outline-dark" type="reset" onclick="clearButtons()">reset</button>
+   
 </div>
 <div class="col">
 
-    
+    <!--disply the audio bar, submit transcribes-->
     <div class='urlsubmit'>
         <form action="/transcribe" method="GET">
             <input type="text" id="myText" value="Some text...">  
-            <input type="submit" value="Submit" type="button" class="btn btn-outline-dark">
+            <input type="submit" value="Find Words" class="btn btn-outline-dark" onclick="addButtons(times)">
         </form> 
     </div>
 
-    <div id='button-group'>
-    <button type="button" class="btn btn-outline-dark">TIMESTAMP 1</button>
-    <button type="button" class="btn btn-outline-dark">TIMESTAMP 2</button>
+<!--this is where the buttons appear-->
+    <div id='buttons'>
+   
     </div>
 </div>
 </div>
-<script>
-    function playTimestamp(time) {
-        myAudio=document.getElementById('sound');
-        myAudio.currentTime = time;
-        myAudio.play();
-        }
-</script>
-
 <script>
     function myFunction() {
         var x = document.getElementById('myText').value;
         localStorage.setItem('key', x);
         document.getElementById(id).innerHTML = "yay";
     }
+
+    function playTimestamp(time) {
+     	 var myAudio=document.getElementById("sound");
+     	 myAudio.currentTime = time;
+     	 //myAudio.play();
+        }
+		
+        var times = [20, 40, 70, 90];
+        
+        function addButton(times) {
+        document.getElementById("buttons").innerHTML = "";
+        
+        	times.forEach( function (t) {
+        		var button= document.createElement('button');
+           	 	button.type = "button";
+            
+           	button.appendChild(document.createTextNode(secondsminutes(t)));
+            		button.setAttribute("onclick", "playTimestamp("+t+")");
+                    document.getElementById("buttons").appendChild(button);
+            
+                button.classList.add("buttonStyling");
+            });
+            audioUpload();
+            }
+            
+    	function secondsminutes(t) {
+  var seconds = t % 60;
+  var minutes = Math.floor(t/60);
+
+  var hours = Math.floor(minutes/60);
+  minutes = minutes % 60;
+
+  var strSec = seconds;
+  var strMin = minutes;
+  var strHours = hours;
+
+    if (hours.toString().length === 1) {
+      strHours = "0" + hours.toString();
+  }
+   if (minutes.toString().length === 1) {
+      strMin = "0" + minutes.toString();
+  }
+  if (seconds.toString().length === 1) {
+      strSec = "0" + seconds.toString();
+  }
+
+  var display = strHours + ":" + strMin + ":" + strSec;
+  return display;
+}
+
+	function clearButtons() {
+    	document.getElementById("buttons").innerHTML = "";
+        document.getElementById("sound").setAttribute("currentTime", 0);
+    }
+
+    function audioUpload() {
+        var audio = document.getElementById("upload").files[0];
+
+        var reader = new FileReader();
+
+        reader.onload = function(e) {
+             document.getElementById("sound").src = e.target.result;
+             document.getElementById("sound").controls = "controls";
+            }
+
+        reader.readAsDataURL(audio);
+
+        }
 </script>
 
 </body>
