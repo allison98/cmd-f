@@ -21,11 +21,15 @@ var storage = multer.diskStorage({
     cb(null, 'uploads')
   },
   filename: function (req, file, cb) {
-    cb(null, file.fieldname)
+    cb(null, file.fieldname+'.flac')
   }
 })
  
 var upload = multer({ storage: storage })
+
+app.get('/', (req, res) => {
+  res
+})
 
 app.post('/uploadfile', upload.single('myFile'), (req, res, next) => {
   const file = req.file
@@ -37,6 +41,12 @@ app.post('/uploadfile', upload.single('myFile'), (req, res, next) => {
     uploadAudio();
     res.send(file)
   
+})
+
+app.get('/', (req, res) => {
+  transcribe();
+
+  res.send('this is working');
 })
 
 app.post('/upload', (req, res) => {
@@ -95,15 +105,13 @@ async function transcribe() {
     });
   }
   transcribe().catch(console.error);
+
   async function uploadAudio() {
     const {Storage} = require('@google-cloud/storage');
 
     // Creates a client
     const storage = new Storage();
     
-    /**
-     * TODO(developer): Uncomment the following lines before running the sample.
-     */
     const bucketName = 'cmdfaudio';
     const filename = './uploads/myFile.flac';
     
