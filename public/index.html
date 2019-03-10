@@ -10,9 +10,8 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <style>
-        
         * {
-         overflow:hidden;   
+            overflow:hidden;
         }
         .header {
             position:relative;
@@ -58,8 +57,8 @@
 
         .col {
             float:left;
-            width:40%;
-            margin:2%;
+            width:50%;
+            padding:50px;
         }
 
         .row:after {
@@ -75,13 +74,29 @@
         }
 
         .buttonStyling {
-        display:block;
-     
+        display:block !important;
+        margin:10px;
+    
     }
-}
-        </style>
-        <script src="/node_modules/angular/angular.js"></script>
-    </head>
+        }
+    .footer {
+        position:absolute;
+        bottom:0;
+        background-color:lavender;
+        text-align:center;
+        font-family: 'Courier New', Courier, monospace;
+        padding:10px;
+        height:150px;
+        width:100%;
+        color:darkgray;
+    }
+    .skiping {
+        margin:0px 70px;
+        display:block;
+    }
+    </style>
+
+</head>
 
 <title>CMD-F</title>
 
@@ -108,15 +123,17 @@
 
 <!--UPLOAD an audio file, upload file button will add to bucket-->
 <form action="/uploadfile" enctype="multipart/form-data" method="POST"> 
-    <input type="file" name="myFile" class="btn btn-outline-dark"/>
+    <input id="upload" type="file" name="myFile" class="btn btn-outline-dark"/>
     <input class="btn btn-outline-dark" type="submit" value="Upload a file"/>
  </form>
 
 <!--disply the audio bar, submit adds the time buttons-->
- <audio id="sound" style="margin:30px" src="https://ia801309.us.archive.org/5/items/eubanks_elizabeth_01/eubanks_elizabeth_01.mp3" controls="controls">  </audio>
-	<button class="btn btn-outline-dark" id="upload" type="submit" onclick="addButton(times)">Submit</button>
-    <button  class="btn btn-outline-dark" type="reset" onclick="clearButtons()">reset</button>
-   
+ <audio id="sound" style="margin:30px" src="https://ia801309.us.archive.org/5/items/eubanks_elizabeth_01/eubanks_elizabeth_01.mp3" controls="controls">  
+</audio>
+<div class='skipping'>
+	<button class="btn btn-outline-dark" type="submit" onclick="audioUpload()">Submit</button>
+    <button  class="btn btn-outline-dark" type="reset" onclick="clearButtons()">Reset</button>
+</div>  
 </div>
 <div class="col">
 
@@ -124,16 +141,21 @@
     <div class='urlsubmit'>
         <form action="/transcribe" method="GET">
             <input type="text" id="myText" value="Some text...">  
-            <input type="submit" value="Find Words" class="btn btn-outline-dark" onclick="addButtons(times)">
+            <input type="submit" value="cmd-f" class="btn btn-outline-dark" onclick="addButtons(times)">
         </form> 
     </div>
-
+    <div >
+        <p id = 'keyval'></p>
+    </div>
 <!--this is where the buttons appear-->
     <div id='buttons'>
    
     </div>
 </div>
+
 </div>
+<div class="footer"><p>Created by Thai, Maggie, Brooke and Allison</p>
+    <p>cmd-f Hackathon Vancouver, March 9-10, 2019</p></div>
 <script>
     function myFunction() {
         var x = document.getElementById('myText').value;
@@ -144,7 +166,7 @@
     function playTimestamp(time) {
      	 var myAudio=document.getElementById("sound");
      	 myAudio.currentTime = time;
-     	 //myAudio.play();
+     	 myAudio.play();
         }
 		
         var times = [20, 40, 70, 90];
@@ -161,8 +183,11 @@
                     document.getElementById("buttons").appendChild(button);
             
                 button.classList.add("buttonStyling");
+                button.classList.add("btn");
+                button.classList.add("btn-outline-dark");
             });
-            audioUpload();
+            // audioUpload();
+        document.getElementById("keyval").innerHTML=document.getElementById("myText").value + ' is located in the following times';
             }
             
     	function secondsminutes(t) {
@@ -208,6 +233,8 @@
         reader.readAsDataURL(audio);
 
         }
+    
+
 </script>
 
 </body>
