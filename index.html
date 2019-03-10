@@ -128,11 +128,11 @@
  </form>
 
 <!--disply the audio bar, submit adds the time buttons-->
- <audio id="sound" style="margin:30px" src="https://ia801309.us.archive.org/5/items/eubanks_elizabeth_01/eubanks_elizabeth_01.mp3" controls="controls">  
+ <audio id="sound" style="margin:30px" src="">  
 </audio>
 <div class='skipping'>
     <button class="btn btn-outline-dark" type="submit" onclick="audioUpload()">Display Audio</button>
-    <button type="submit" value="Display Times" class="btn btn-outline-dark" onclick="addButtons(times)">
+    <button type="submit" class="btn btn-outline-dark" onclick="addButton(times)">Display Times</button>
     <button  class="btn btn-outline-dark" type="reset" onclick="clearButtons()">Reset</button>
 </div>  
 </div>
@@ -140,7 +140,7 @@
 
     <!--disply the audio bar, submit transcribes-->
     <div class='urlsubmit'>
-        <form action="/transcribe" method="GET">
+        <form action="/transcribe" method="POST">
             <input type="text" id="myText" placeholder="Some text...">  
             <input type="submit" value="cmd-f" class="btn btn-outline-dark">
         </form> 
@@ -164,7 +164,7 @@
      	 myAudio.play();
         }
 		
-        var times = [1.2, 20, 32.2, 51.9];
+        var times = [1, 20, 32, 51];
         
         function addButton(times) {
         document.getElementById("buttons").innerHTML = "";
