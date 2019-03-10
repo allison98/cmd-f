@@ -74,8 +74,11 @@
     </div>
     <div class="left">
     <div class='urlsubmit'>
-    <input type="text" id="myText" value="Some text...">  
-    <button type="submit" onclick="myFunction()">Submit</button>
+        <form action="/" method="GET">
+            <input type="text" id="myText" value="Some text...">  
+            <input type="submit" value="Submit">
+        </form> 
+
     </div>
 
     <span id="key-val">
@@ -85,12 +88,7 @@
    <!-- <div class="video">
     <iframe id="ytVideo" width="560" height="315"
      src="https://www.youtube.com/embed/eDkpVwrhYfo" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
-    </div>
--->
-<form action="upload.php" method="post" enctype="multipart/form-data">
-    <input type="file" name="fileupload" value="fileupload" id="fileupload">
-    <input type="submit" value="Upload Audio" name="submit">
-</form>
+    </div>-->
 
 <form action="/uploadfile" enctype="multipart/form-data" method="POST"> 
     <input type="file" name="myFile" />
