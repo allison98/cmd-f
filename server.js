@@ -12,7 +12,7 @@ const database = {
         key: 'narrative'
       }
     ]
-  }
+}
 
 
 // SET STORAGE
@@ -27,9 +27,6 @@ var storage = multer.diskStorage({
  
 var upload = multer({ storage: storage })
 
-app.get('/', (req, res) => {
-  res
-})
 
 app.post('/uploadfile', upload.single('myFile'), (req, res, next) => {
   const file = req.file
@@ -43,10 +40,10 @@ app.post('/uploadfile', upload.single('myFile'), (req, res, next) => {
   
 })
 
-app.get('/', (req, res) => {
+app.get('/transcribe', (req, res) => {
   transcribe();
 
-  res.send('this is working');
+  res.send('Transcripting...');
 })
 
 app.post('/upload', (req, res) => {
@@ -70,7 +67,7 @@ async function transcribe() {
   
     // The audio file's encoding, sample rate in hertz, and BCP-47 language code
     const audio = {
-      uri: "gs://cmdfaudio/narrative.flac",
+      uri: "gs://cmdfaudio/myFile.flac",
     };
     const config = {
       enableWordTimeOffsets: true,
@@ -113,7 +110,20 @@ async function transcribe() {
     const storage = new Storage();
     
     const bucketName = 'cmdfaudio';
-    const filename = './uploads/myFile.flac';
+    const audios = storage.bucket(bucketName);
+    const filename = './uploads/narrative.flac';
+
+    const options = {
+      entity: 'allUsers',
+      role: storage.acl.READER_ROLE
+    };
+    
+    audios.acl.add(options, function(err, aclObject) {});
+    
+    //-
+    // Make any new objects added to a bucket publicly readable.
+    //-
+    audios.acl.default.add(options, function(err, aclObject) {});
     
     // Uploads a local file to the bucket
     await storage.bucket(bucketName).upload(filename, {
