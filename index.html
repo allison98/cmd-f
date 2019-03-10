@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<title>CMD-F</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+.header {
+    position:relative;
+    background-color:purple;
+    text-align:center;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    margin-bottom:20px;
+    padding:10px;
+    color:white;
+
+}
+
+.urlsubmit {
+    margin:auto;
+    display:inline-block;
+    position: relative;
+}
+</style>
+<body>
+    <div class="header">CMD-F HACKATHON</div>
+
+    <div class='urlsubmit'>
+    <input type="text" id="myText" value="Some text...">  
+    <button type="submit" onclick="myFunction()">Submit</button>
+    </div>
+     
+    <div class="video">
+    <iframe id="ytVideo" width="560" height="315"
+     src="https://www.youtube.com/embed/eDkpVwrhYfo" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+    </div>
+
+  
+<script>
+
+function myFunction() {
+  var x = document.getElementById('myText').value;
+  document.getElementById('ytVideo').src = x;
+}
+// https://www.youtube.com/embed/ntC6W_q2EGw
+</script>
+
+</body>
+</html>
