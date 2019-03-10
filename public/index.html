@@ -6,6 +6,10 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <style>
+        
+        * {
+            
+        }
         .header {
             position:relative;
             background-color:lavender;
@@ -25,6 +29,8 @@
         text-decoration: none;
         display: inline-block;
         font-size: 13px;
+      
+
         }
         .urlsubmit {
             margin:auto;
@@ -33,6 +39,27 @@
             padding-bottom:20px;
             text-align:center;
         }
+
+        .title {
+            font-family: 'Courier New', Courier, monospace;
+            color:black;
+            font-size: 30px;
+            font-weight: 800;
+        }
+
+        .subtitle {
+            font-family: 'Courier New', Courier, monospace;
+            color:black;
+        }
+
+        .left {
+            float:left;
+            width:50%;
+        }
+
+        .right {
+            width:50%;
+        }
         </style>
         <script src="/node_modules/angular/angular.js"></script>
     </head>
@@ -40,9 +67,12 @@
 <title>CMD-F</title>
 
 <body>
-    <div class="header"><img height="70" src="maingraphic.png">
-        <p</p></div>
-
+    <div class="header">
+        <!--<img height="70" src="maingraphic.png">-->
+        <p class = "title">cmd-f my voice.</p>
+        <p class = "subtitle">locate key phrases in audio and video files and quickly jump to the parts you want.</p>
+    </div>
+    <div class="left">
     <div class='urlsubmit'>
         <form action="/transcribe" method="GET">
             <input type="text" id="myText" value="Some text...">  
@@ -55,10 +85,10 @@
         key
     </span>
      
-    <div class="video">
+   <!-- <div class="video">
     <iframe id="ytVideo" width="560" height="315"
      src="https://www.youtube.com/embed/eDkpVwrhYfo" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
-    </div>
+    </div>-->
 
 <form action="/uploadfile" enctype="multipart/form-data" method="POST"> 
     <input type="file" name="myFile" />
@@ -67,7 +97,13 @@
 
     <audio id="sound" src="sound.mp3" controls="controls"></audio>
     <button id="button" onclick="playTimestamp(20)">BUTTON</button>
-
+</div>
+<div class="right">
+    <div id='button-group'>
+    <button>TIMESTAMP 1</button>
+    <button>TIMESTAMP 2</button>
+    </div>
+</div>
 <script>
     function playTimestamp(time) {
         myAudio=document.getElementById('sound');
@@ -79,7 +115,6 @@
 <script>
     function myFunction() {
         var x = document.getElementById('myText').value;
-        //x = text(x).replace(/(?:http:\/\/)?(?:www\.)?(?:youtube\.com)\/(?:watch\?v=)?(.+)/g, 'https://www.youtube.com/embed/');
         localStorage.setItem('key', x);
         document.getElementById(id).innerHTML = "yay";
     }
