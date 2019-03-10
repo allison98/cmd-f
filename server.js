@@ -91,7 +91,6 @@ async function transcribe(keyToFind) {
         }
       });
     });
-
     times.forEach(element => {
       console.log(element);
     });

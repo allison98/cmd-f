@@ -18,12 +18,19 @@
     
   <h3>Try me!</h3>
   <p>
+  Watch a video: https://www.useloom.com/share/98f200623c2241778f8d924e11759d07
+
   npm install 
 
   npm start 
 
   Try typing a word you want to find. Press "Find Words".
   Look in your console for the timestamps and transcript!
+  </p>
+
+  <h3>Website</h3>
+  <p>
+  
   </p>
   <h3>Acknowledgements</h3>
   <p>
