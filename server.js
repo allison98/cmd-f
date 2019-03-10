@@ -1,5 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
+const multer = require('multer');
+
 
 const app = express();
 app.use(express.static(__dirname + '/public'));
@@ -12,11 +14,31 @@ const database = {
     ]
   }
 
-app.get('/transcribe', (req, res) => {
-    transcribe();
 
-    res.send('this is working');
+// SET STORAGE
+var storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, 'uploads')
+  },
+  filename: function (req, file, cb) {
+    cb(null, file.fieldname)
+  }
 })
+ 
+var upload = multer({ storage: storage })
+
+app.post('/uploadfile', upload.single('myFile'), (req, res, next) => {
+  const file = req.file
+  if (!file) {
+    const error = new Error('Please upload a file')
+    error.httpStatusCode = 400
+    return next(error)
+  }
+    uploadAudio();
+    res.send(file)
+  
+})
+
 app.post('/upload', (req, res) => {
     const { key } = req.body;
     database.keys.push({
@@ -73,19 +95,33 @@ async function transcribe() {
     });
   }
   transcribe().catch(console.error);
+  async function uploadAudio() {
+    const {Storage} = require('@google-cloud/storage');
 
+    // Creates a client
+    const storage = new Storage();
+    
+    /**
+     * TODO(developer): Uncomment the following lines before running the sample.
+     */
+    const bucketName = 'cmdfaudio';
+    const filename = './uploads/myFile.flac';
+    
+    // Uploads a local file to the bucket
+    await storage.bucket(bucketName).upload(filename, {
+      // Support for HTTP requests made with `Accept-Encoding: gzip`
+      gzip: true,
+      metadata: {
+        // Enable long-lived HTTP caching headers
+        // Use only if the contents of the file will never change
+        // (If the contents will change, use cacheControl: 'no-cache')
+        cacheControl: 'public, max-age=31536000',
+      },
+    });
+    
+    console.log(`${filename} uploaded to ${bucketName}.`);
+  }
 
-
-
-/*
-
-/ --> res = this is working
-/signin --> POST = success/fail
-/register --> POST = user
-/profile/:userId --> GET = user 
-/image --> PUT --> user
-
-*/
 
 app.listen(3000, () => {
     console.log('app is running on port 3000');

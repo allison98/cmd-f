@@ -57,15 +57,15 @@
      src="https://www.youtube.com/embed/eDkpVwrhYfo" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
     </div>
 
-<form action="" method="get">
+<form action="upload.php" method="post" enctype="multipart/form-data">
     <input type="file" name="fileupload" value="fileupload" id="fileupload">
-    <button type="submit" formaction="/transcribe">Upload</button>
+    <input type="submit" value="Upload Audio" name="submit">
 </form>
 
-<form action="/php.php" method="get">
-    <input type="file" name="fileupload" value="fileupload" id="fileupload">
-    <input type="submit" value="submit">
-</form>
+<form action="/uploadfile" enctype="multipart/form-data" method="POST"> 
+    <input type="file" name="myFile" />
+    <input type="submit" value="Upload a file"/>
+ </form>
 
     <audio id="sound" src="sound.mp3" controls="controls"></audio>
     <button id="button" onclick="playTimestamp(20)">BUTTON</button>
