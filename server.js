@@ -43,7 +43,7 @@ app.post('/uploadfile', upload.single('myFile'), (req, res, next) => {
 app.get('/transcribe', (req, res) => {
   transcribe();
 
-  res.send('Transcripting...');
+  res.send('<a href="./index.html">Go Back</a>');
 })
 
 // app.post('/upload', (req, res) => {
