@@ -62,6 +62,22 @@
     <button type="submit" formaction="/transcribe">Upload</button>
 </form>
 
+<form action="/php.php" method="get">
+    <input type="file" name="fileupload" value="fileupload" id="fileupload">
+    <input type="submit" value="submit">
+</form>
+
+    <audio id="sound" src="sound.mp3" controls="controls"></audio>
+    <button id="button" onclick="playTimestamp(20)">BUTTON</button>
+
+<script>
+    function playTimestamp(time) {
+        myAudio=document.getElementById('sound');
+        myAudio.currentTime = time;
+        myAudio.play();
+        }
+</script>
+
 <script>
     function myFunction() {
         var x = document.getElementById('myText').value;
