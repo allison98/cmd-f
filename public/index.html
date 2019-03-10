@@ -3,12 +3,16 @@
     <head>
         <title>cmd-f Voice</title>
         <script src="../texttospeech_api.js"></script>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <style>
         
         * {
-            
+         overflow:hidden;   
         }
         .header {
             position:relative;
@@ -20,18 +24,18 @@
             color:darkgray;
         }
 
-        button {
-        background-color: rgb(147, 133, 226); /* Green */
+      /*  button {
+        background-color: rgb(147, 133, 226); 
         border: none;
         color: white;
         padding: 5px 50px;
         text-align: center;
         text-decoration: none;
         display: inline-block;
-        font-size: 13px;
+        font-size: 13px;*/
       
 
-        }
+        
         .urlsubmit {
             margin:auto;
             display:inline-block;
@@ -52,14 +56,24 @@
             color:black;
         }
 
-        .left {
+        .col {
             float:left;
-            width:50%;
+            width:40%;
+            margin:2%;
         }
 
-        .right {
-            width:50%;
+        .row:after {
+            content: "";
+            display: table;
+            clear: both;
         }
+
+
+        @media screen and (max-width: 600px) {
+        .column {
+            width: 100%;
+        }
+}
         </style>
         <script src="/node_modules/angular/angular.js"></script>
     </head>
@@ -72,14 +86,9 @@
         <p class = "title">cmd-f my voice.</p>
         <p class = "subtitle">locate key phrases in audio and video files and quickly jump to the parts you want.</p>
     </div>
-    <div class="left">
-    <div class='urlsubmit'>
-        <form action="/transcribe" method="GET">
-            <input type="text" id="myText" value="Some text...">  
-            <input type="submit" value="Submit">
-        </form> 
+    <div class="row">
+    <div class="col">
 
-    </div>
 
     <span id="key-val">
         key
@@ -91,18 +100,28 @@
     </div>-->
 
 <form action="/uploadfile" enctype="multipart/form-data" method="POST"> 
-    <input type="file" name="myFile" />
-    <input type="submit" value="Upload a file"/>
+    <input type="file" name="myFile" class="btn btn-outline-dark"/>
+    <input type="button" class="btn btn-outline-dark" type="submit" value="Upload a file"/>
  </form>
 
     <audio id="sound" src="sound.mp3" controls="controls"></audio>
-    <button id="button" onclick="playTimestamp(20)">BUTTON</button>
+    <!--<button type="button" class="btn btn-outline-dark" id="button" onclick="playTimestamp(20)">BUTTON</button>-->
 </div>
-<div class="right">
-    <div id='button-group'>
-    <button>TIMESTAMP 1</button>
-    <button>TIMESTAMP 2</button>
+<div class="col">
+
+    
+    <div class='urlsubmit'>
+        <form action="/transcribe" method="GET">
+            <input type="text" id="myText" value="Some text...">  
+            <input type="submit" value="Submit" type="button" class="btn btn-outline-dark">
+        </form> 
     </div>
+
+    <div id='button-group'>
+    <button type="button" class="btn btn-outline-dark">TIMESTAMP 1</button>
+    <button type="button" class="btn btn-outline-dark">TIMESTAMP 2</button>
+    </div>
+</div>
 </div>
 <script>
     function playTimestamp(time) {
