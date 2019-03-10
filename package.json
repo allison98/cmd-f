@@ -1,0 +1,28 @@
+{
+  "name": "cmd-f",
+  "version": "1.0.0",
+  "description": "",
+  "main": "javascript_api.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/allison98/cmd-f.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/allison98/cmd-f/issues"
+  },
+  "homepage": "https://github.com/allison98/cmd-f#readme",
+  "devDependencies": {
+    "nodemon": "^1.18.10"
+  },
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "express": "^4.16.4"
+  }
+}

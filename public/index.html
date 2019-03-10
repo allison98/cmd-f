@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>cmd-f Voice</title>
+        <script src="../texttospeech_api.js"></script>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <style>
+        .header {
+            position:relative;
+            background-color:lavender;
+            text-align:center;
+            font-family: Verdana, Geneva, Tahoma, sans-serif;
+            margin-bottom:20px;
+            padding:10px;
+            color:darkgray;
+        }
+
+        button {
+        background-color: rgb(147, 133, 226); /* Green */
+        border: none;
+        color: white;
+        padding: 5px 50px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 13px;
+        }
+        .urlsubmit {
+            margin:auto;
+            display:inline-block;
+            position: relative;
+            padding-bottom:20px;
+            text-align:center;
+        }
+        </style>
+        <script src="/node_modules/angular/angular.js"></script>
+    </head>
+
+<title>CMD-F</title>
+
+<body>
+    <div class="header"><img height="70" src="maingraphic.png">
+        <p</p></div>
+
+    <div class='urlsubmit'>
+    <input type="text" id="myText" value="Some text...">  
+    <button type="submit" onclick="myFunction()">Submit</button>
+    </div>
+
+    <span id="key-val">
+        key
+    </span>
+     
+    <div class="video">
+    <iframe id="ytVideo" width="560" height="315"
+     src="https://www.youtube.com/embed/eDkpVwrhYfo" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+    </div>
+
+<form action="" method="get">
+    <input type="file" name="fileupload" value="fileupload" id="fileupload">
+    <button type="submit" formaction="/transcribe">Upload</button>
+</form>
+
+<script>
+    function myFunction() {
+        var x = document.getElementById('myText').value;
+        //x = text(x).replace(/(?:http:\/\/)?(?:www\.)?(?:youtube\.com)\/(?:watch\?v=)?(.+)/g, 'https://www.youtube.com/embed/');
+        localStorage.setItem('key', x);
+        document.getElementById(id).innerHTML = "yay";
+    }
+</script>
+
+</body>
+</html>
