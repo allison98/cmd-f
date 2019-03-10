@@ -46,13 +46,13 @@ app.get('/transcribe', (req, res) => {
   res.send('Transcripting...');
 })
 
-app.post('/upload', (req, res) => {
-    const { key } = req.body;
-    database.keys.push({
-        key: key
-    })
-    res.json(database.keys);
-})
+// app.post('/upload', (req, res) => {
+//     const { key } = req.body;
+//     database.keys.push({
+//         key: key
+//     })
+//     res.json(database.keys);
+// })
 
 async function transcribe() {
     // Imports the Google Cloud client library
@@ -67,7 +67,7 @@ async function transcribe() {
   
     // The audio file's encoding, sample rate in hertz, and BCP-47 language code
     const audio = {
-      uri: "gs://cmdfaudio/myFile.flac",
+      uri: "gs://cmdfaudio/narrative.flac",
     };
     const config = {
       enableWordTimeOffsets: true,
@@ -111,7 +111,7 @@ async function transcribe() {
     
     const bucketName = 'cmdfaudio';
     const audios = storage.bucket(bucketName);
-    const filename = './uploads/narrative.flac';
+    const filename = './uploads/myFile.flac';
 
     const options = {
       entity: 'allUsers',
@@ -138,6 +138,14 @@ async function transcribe() {
     });
     
     console.log(`${filename} uploaded to ${bucketName}.`);
+
+    const filename_bucket = 'myFile.flac';
+    await storage
+    .bucket(bucketName)
+    .file(filename_bucket)
+    .makePublic();
+
+    console.log(`gs://${bucketName}/${filename} is now public.`);
   }
 
 
