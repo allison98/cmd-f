@@ -16,6 +16,15 @@
     Google Speech-to-Text API to transcribe audio files into text and extract the timestamps of 
     all occurrences of the keyword.  </p>
     
+  <h3>Try me!</h3>
+  <p>
+  npm install 
+
+  npm start 
+
+  Try typing a word you want to find. Press "Find Words".
+  Look in your console for the timestamps and transcript!
+  </p>
   <h3>Acknowledgements</h3>
   <p>
     We acknowledge the many resources provided by the online community, including W3Schools and StackOverflow. We would also like to thank the mentors, volunteers, organizers, and sponsors of cmd-f 2019.
